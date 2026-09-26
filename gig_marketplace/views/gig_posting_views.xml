@@ -19,8 +19,16 @@
                     </div>
                     <group>
                         <group string="Gig Details">
-                            <field name="category" placeholder="Filled out by AI"/>
-                            <button name="action_suggest_category" type="object" string="Suggest Category" />
+                            <label for="category"/>
+                            <div class="o_row">
+                                <field name="category" placeholder="Filled out by AI"/>
+                                <button
+                                    name="action_suggest_category"
+                                    type="object"
+                                    string="Suggest Category"
+                                    class="btn-primary"
+                                />
+                            </div>
                             <field name="poster_id"/>
                         </group>
                         <group string="Budget &amp; Timing">
