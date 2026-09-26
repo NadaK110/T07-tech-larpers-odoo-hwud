@@ -9,6 +9,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/gig_posting_views.xml',
+        'views/gig_application_views.xml',
     ],
     'installable': True,
     'application': True,
