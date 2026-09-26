@@ -2,6 +2,7 @@
 
 **Track:** Track 3 — Open Innovation
 **Event:** Odoo × HW Tech Club BuildOdoo 2026 Hackathon
+**Repo:** https://github.com/NadaK110/T07-tech-larpers-odoo-hwud
 
 ## What we're building
 
@@ -9,104 +10,93 @@ A platform where students post small gigs (tutoring, design work, errands, etc.)
 other students apply to them. An AI feature auto-categorizes gig postings based on their
 description, and (stretch goal) helps match applicants to relevant gigs.
 
-## Project status
+## ⚡ Current Status (updated)
 
-- Odoo 19.0 set up and running locally by each team member (via the shared setup guide).
-- The `estate` and `estate_accounts` folders in this repo are from the intro workshop —
-  they're our **reference material** for Odoo module structure (models, views, security),
-  **not** our actual project.
-- Our custom marketplace module will live alongside them in this same folder.
+| Task | Owner(s) | Status |
+|---|---|---|
+| Task 1 — Backend: `gig.posting` model + module setup | Nada | ✅ Done |
+| Task 2 — Backend: `gig.application` model + Applications tab | Nada | ✅ Done |
+| Task 3 — Frontend/Views (list, kanban, search, form polish) | Zuha | 🔄 In progress (50%) |
+| Task 4 — AI categorization integration | Shayaan, Irina, Madiha | 🔲 Not started |
+| Presentation / demo prep | **OPEN — needs an owner** | 🔲 Not started |
 
-## Getting started (for teammates joining the repo)
+## Getting started (for teammates joining now)
 
-1. Make sure Odoo is running locally on your own machine (following the setup guide
-   everyone used before the hackathon). This repo only contains our custom module code,
-   not the Odoo core itself.
+1. Make sure Odoo is running locally on your own machine (setup guide from before the
+   hackathon). This repo only holds our custom module code, not the Odoo core itself.
 
 2. Clone this repo:
    ```bash
    git clone https://github.com/NadaK110/T07-tech-larpers-odoo-hwud.git
    ```
-   Any folder on your machine works — it doesn't need to be inside `odoo-server`.
 
-3. Look inside `estate/` and `estate_accounts/` to see how Odoo modules are structured
-   (manifest files, models, views, security) before building our own.
-
-4. **Don't commit directly to `main`.** Create your own branch for whatever you're working on:
+3. Pull the latest before you start working, every time:
    ```bash
-   git checkout -b yourname-feature
+   git pull --no-rebase
    ```
-   Commit your work there, then open a Pull Request on GitHub to merge into `main` once
-   it's working. This avoids overwriting each other's changes.
 
-## Data model (planned)
+4. Our module lives in `gig_marketplace/` (alongside the `estate` and `estate_accounts`
+   reference modules from the intro workshop — those are just examples, not our project).
 
-**`gig.posting`** — a job someone wants done
-- `name` (Char) — title
-- `description` (Text) — free text details
-- `poster_id` (Many2one → res.partner) — who posted it
-- `category` (Selection/Char) — auto-suggested by AI from the description
-- `budget` (Float) — optional
-- `deadline` (Date)
-- `state` (Selection) — Open / In Progress / Completed / Cancelled
+5. **Don't commit straight to `main` without pulling first** — a few of us hit a
+   divergent-branch issue already today. Always `git pull --no-rebase` before you start
+   editing, and again before you push.
+
+## What's already working
+
+- You can create a "gig" (title, description, category, budget, deadline, status)
+- Gigs show up in a Kanban board grouped by status, plus a list view with filters
+- Opening a gig shows a status bar (Open → In Progress → Completed) and a polished form
+- An **Applications tab** on each gig lets you add applicants, their message, and status
+  (Pending/Accepted/Rejected) — tested and working
+
+## What's NOT done yet — where to focus
+
+**Task 4 (Shayaan, Irina, Madiha) — AI Categorization**
+- Get an LLM API key (OpenAI or Anthropic)
+- Write a function that takes a gig's `description` text and returns a suggested
+  `category`
+- Hook it into `gig.posting` so the category auto-fills when a gig is created/saved
+- Test it against several different gig descriptions (tutoring, design, errands) to make
+  sure it's actually accurate
+- Stretch goal if time allows: score how well an applicant's message matches a gig's
+  description
+
+**Task 3 (Zuha) — remaining 50%**
+- Check in with Zuha on what's left — likely refinements to existing views, and possibly
+  the Applications tab UI could use polish (accept/reject buttons instead of manually
+  editing the status dropdown, for example)
+
+**Presentation / Demo Prep — OPEN ROLE**
+Whoever picks this up should:
+- Create realistic sample gigs and applications (8-10+) so the app looks like an active
+  marketplace, not just test data
+- Test the full user journey end-to-end (post a gig → apply → accept/reject) and flag any
+  bugs to whoever owns that part
+- Write a short demo script/walkthrough (aim for 2-3 minutes)
+- Set up shared slides (problem, solution, how it works, tech stack, impact) — pull a
+  couple of lines from each teammate about the part they built
+- Note: this doesn't have to be one person — presenting itself is a team effort, everyone
+  should be ready to speak to the part they built. This role is about coordinating and
+  making sure it all comes together.
+
+## Data model (for reference)
+
+**`gig.posting`**
+- `name`, `description`, `poster_id` (→ res.partner), `category`, `budget`, `deadline`
+- `state`: Open / In Progress / Completed / Cancelled
 - `application_ids` (One2many → gig.application)
 
-**`gig.application`** — someone applying to a gig
-- `gig_id` (Many2one → gig.posting)
-- `applicant_id` (Many2one → res.partner)
-- `message` (Text) — pitch/cover note
-- `status` (Selection) — Pending / Accepted / Rejected
-- `match_score` (Float, optional) — for stretch-goal applicant matching
+**`gig.application`**
+- `gig_id` (→ gig.posting), `applicant_id` (→ res.partner), `message`
+- `status`: Pending / Accepted / Rejected
 
-**AI feature (v1):** on creating a gig posting, send the description to an LLM API and
-auto-fill the `category` field.
+## Timeline reminders
 
-**AI feature (stretch):** score how well an applicant's message matches a gig's
-description, and sort applications by that score.
-
-## Team roles
-
-| Person | Role | Responsibilities |
-|---|---|---|
-| Person 1 | Backend Lead (Gig Model) | Module skeleton (`__manifest__.py`, `__init__.py`), `gig.posting` model, basic security/access rules |
-| Person 2 | Backend (Applications Model) | `gig.application` model, relationship to `gig.posting`, status transitions |
-| Person 3 | Frontend/Views | List/form views for both models, Kanban board if time allows, menus/navigation |
-| Person 4 | AI Integration | LLM API setup, category-suggestion function, hook it into `gig.posting` |
-| Person 5 | Testing & Demo Prep | Sample data, end-to-end testing, coordinating the demo walkthrough |
-
-*Note: confirm with organizers whether a 5-person team is allowed — the brief states team
-size is 1–4 students.*
-
-**Presentation:** everyone contributes — each person prepares to speak to the part they
-built (their model, their views, the AI feature, testing/demo). Person 5 coordinates
-pulling it together into one coherent script/slides, but the actual presenting and
-content is a team effort.
-
-## 48-hour timeline
-
-**Day 1 AM**
-- Finalize data model as a team
-- Create module skeleton
-- Build `gig.posting` model with basic views
-
-**Day 1 PM**
-- Build `gig.application` model
-- Wire up the relationship between models
-- Get a plain, ugly-but-working end-to-end flow: post a gig → apply → view it
-
-**Day 2 AM**
-- Add AI categorization feature
-- Add basic access rules
-
-**Day 2 PM**
-- Polish UI (views, kanban board)
-- Test full user journeys (poster + applicant)
-- Prep demo: seed realistic sample data, script the walkthrough
-
-**Submission deadline:** Monday 28th September, 12 PM
-**Presentation:** Wednesday 30th September, 2–4 PM
+- **Submission deadline:** Monday 28th September, 12 PM
+- **Presentation:** Wednesday 30th September, 2–4 PM
 
 ## Questions or blockers?
 
 Ping the group chat — don't spend more than ~20–30 minutes stuck alone on a setup issue,
-just ask.
+just ask
