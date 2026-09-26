@@ -1,59 +1,112 @@
-# BuildOdoo 2026 — Team Catch-Up Summary
+# BuildOdoo 2026 — Student Freelance/Gig Marketplace
 
-## Where we are
+**Track:** Track 3 — Open Innovation
+**Event:** Odoo × HW Tech Club BuildOdoo 2026 Hackathon
 
-- Odoo 19.0 is set up and running locally (via the setup script + VS Code).
-- We're doing **Track 3 — Open Innovation**: a **Student Freelance/Gig Marketplace**.
-  - Students post small gigs (tutoring, design, errands, etc.)
-  - Other students apply to them
-  - AI auto-categorizes gig postings from their description (planned feature)
-- The `estate` and `estate_accounts` folders (from the intro workshop) are our starting
-  point / reference for how Odoo modules are structured — **not** our actual project.
-- Our custom modules will live alongside those, in the same `workshop/Workshop` folder.
+## What we're building
 
-## What's been done so far
+A platform where students post small gigs (tutoring, design work, errands, etc.) and
+other students apply to them. An AI feature auto-categorizes gig postings based on their
+description, and (stretch goal) helps match applicants to relevant gigs.
 
-1. Odoo server installed and running locally, confirmed working at `localhost:8069`.
-2. Logged into Odoo with our own admin login (database name: `admin`).
-3. Created a shared GitHub repo for the project:
-   **https://github.com/NadaK110/T07-tech-larpers-odoo-hwud**
-4. Pushed the existing `estate` and `estate_accounts` folders to that repo as a starting commit.
-5. You should each be getting (or have gotten) a **GitHub collaborator invite** to this repo — accept it.
+## Project status
 
-## What you need to do after accepting the GitHub invite
+- Odoo 19.0 set up and running locally by each team member (via the shared setup guide).
+- The `estate` and `estate_accounts` folders in this repo are from the intro workshop —
+  they're our **reference material** for Odoo module structure (models, views, security),
+  **not** our actual project.
+- Our custom marketplace module will live alongside them in this same folder.
 
-1. **Make sure Odoo is already running on your own Mac** (following the same setup guide
-   everyone used) — this repo doesn't include the Odoo core itself, only our custom module code.
+## Getting started (for teammates joining the repo)
 
-2. **Clone the repo** onto your Mac. Open Terminal and run:
+1. Make sure Odoo is running locally on your own machine (following the setup guide
+   everyone used before the hackathon). This repo only contains our custom module code,
+   not the Odoo core itself.
+
+2. Clone this repo:
    ```bash
    git clone https://github.com/NadaK110/T07-tech-larpers-odoo-hwud.git
    ```
-   You can run this in any folder you like — it doesn't need to be inside `odoo-server`.
+   Any folder on your machine works — it doesn't need to be inside `odoo-server`.
 
-3. This will download a folder called `T07-tech-larpers-odoo-hwud/` containing `estate/`
-   and `estate_accounts/`. Take a look inside — that's the reference module structure
-   (models, views, security files) we'll be copying the pattern from for our own module.
+3. Look inside `estate/` and `estate_accounts/` to see how Odoo modules are structured
+   (manifest files, models, views, security) before building our own.
 
-4. **Don't edit directly on the `main` branch.** When you start building your part, create
-   your own branch first:
+4. **Don't commit directly to `main`.** Create your own branch for whatever you're working on:
    ```bash
    git checkout -b yourname-feature
    ```
-   Work there, commit as you go, then open a Pull Request on GitHub when it's ready to merge
-   into `main`. This avoids overwriting each other's work.
-
-5. Wait for the actual gig-marketplace module skeleton (models, views, manifest) — coming
-   next, will be added to the repo so everyone can pull it and start building their piece.
+   Commit your work there, then open a Pull Request on GitHub to merge into `main` once
+   it's working. This avoids overwriting each other's changes.
 
 ## Data model (planned)
 
-- **`gig.posting`** — a job someone wants done (title, description, category, budget,
-  deadline, status, linked applications)
-- **`gig.application`** — someone applying to a gig (linked gig, applicant, message, status)
-- AI feature: auto-suggest a gig's category from its description text (LLM API call)
+**`gig.posting`** — a job someone wants done
+- `name` (Char) — title
+- `description` (Text) — free text details
+- `poster_id` (Many2one → res.partner) — who posted it
+- `category` (Selection/Char) — auto-suggested by AI from the description
+- `budget` (Float) — optional
+- `deadline` (Date)
+- `state` (Selection) — Open / In Progress / Completed / Cancelled
+- `application_ids` (One2many → gig.application)
 
-## Questions / blockers?
+**`gig.application`** — someone applying to a gig
+- `gig_id` (Many2one → gig.posting)
+- `applicant_id` (Many2one → res.partner)
+- `message` (Text) — pitch/cover note
+- `status` (Selection) — Pending / Accepted / Rejected
+- `match_score` (Float, optional) — for stretch-goal applicant matching
 
-Ping the group chat — don't struggle alone for more than ~20-30 min on a setup issue,
+**AI feature (v1):** on creating a gig posting, send the description to an LLM API and
+auto-fill the `category` field.
+
+**AI feature (stretch):** score how well an applicant's message matches a gig's
+description, and sort applications by that score.
+
+## Team roles
+
+| Person | Role | Responsibilities |
+|---|---|---|
+| Person 1 | Backend Lead (Gig Model) | Module skeleton (`__manifest__.py`, `__init__.py`), `gig.posting` model, basic security/access rules |
+| Person 2 | Backend (Applications Model) | `gig.application` model, relationship to `gig.posting`, status transitions |
+| Person 3 | Frontend/Views | List/form views for both models, Kanban board if time allows, menus/navigation |
+| Person 4 | AI Integration | LLM API setup, category-suggestion function, hook it into `gig.posting` |
+| Person 5 | Testing & Demo Prep | Sample data, end-to-end testing, coordinating the demo walkthrough |
+
+*Note: confirm with organizers whether a 5-person team is allowed — the brief states team
+size is 1–4 students.*
+
+**Presentation:** everyone contributes — each person prepares to speak to the part they
+built (their model, their views, the AI feature, testing/demo). Person 5 coordinates
+pulling it together into one coherent script/slides, but the actual presenting and
+content is a team effort.
+
+## 48-hour timeline
+
+**Day 1 AM**
+- Finalize data model as a team
+- Create module skeleton
+- Build `gig.posting` model with basic views
+
+**Day 1 PM**
+- Build `gig.application` model
+- Wire up the relationship between models
+- Get a plain, ugly-but-working end-to-end flow: post a gig → apply → view it
+
+**Day 2 AM**
+- Add AI categorization feature
+- Add basic access rules
+
+**Day 2 PM**
+- Polish UI (views, kanban board)
+- Test full user journeys (poster + applicant)
+- Prep demo: seed realistic sample data, script the walkthrough
+
+**Submission deadline:** Monday 28th September, 12 PM
+**Presentation:** Wednesday 30th September, 2–4 PM
+
+## Questions or blockers?
+
+Ping the group chat — don't spend more than ~20–30 minutes stuck alone on a setup issue,
 just ask.
