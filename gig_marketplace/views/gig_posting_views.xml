@@ -33,12 +33,19 @@
                         </page>
                         <page string="Applications" name="applications">
                             <field name="application_ids">
-                              <list editable="bottom">
-                                 <field name="applicant_id"/>
-                                 <field name="message"/>
-                                 <field name="status"/>
-                              </list>
-                             </field>
+                                <list editable="bottom">
+                                    <field name="applicant_id"/>
+                                    <field name="message"/>
+                                    <field name="status" widget="badge"
+                                           decoration-warning="status == 'pending'"
+                                           decoration-success="status == 'accepted'"
+                                           decoration-danger="status == 'rejected'"/>
+                                    <button name="action_accept" type="object" icon="fa-check"
+                                            title="Accept" invisible="status != 'pending'"/>
+                                    <button name="action_reject" type="object" icon="fa-times"
+                                            title="Reject" invisible="status != 'pending'"/>
+                                </list>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>

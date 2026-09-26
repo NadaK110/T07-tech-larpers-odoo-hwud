@@ -12,3 +12,15 @@ class GigApplication(models.Model):
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
     ], string='Status', default='pending')
+
+    # accept button - marks this application as accepted and
+    # moves the gig to "In Progress" since someone is now working on it
+    def action_accept(self):
+        for application in self:
+            application.status = 'accepted'
+            application.gig_id.state = 'in_progress'
+
+    # reject button - just marks this application as rejected
+    def action_reject(self):
+        for application in self:
+            application.status = 'rejected'
