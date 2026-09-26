@@ -19,7 +19,8 @@
                     </div>
                     <group>
                         <group string="Gig Details">
-                            <field name="category" placeholder="Filled in by AI"/>
+                            <field name="category" placeholder="Filled out by AI"/>
+                            <button name="action_suggest_category" type="object" string="Suggest Category" />
                             <field name="poster_id"/>
                         </group>
                         <group string="Budget &amp; Timing">
