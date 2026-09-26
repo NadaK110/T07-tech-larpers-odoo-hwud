@@ -31,6 +31,15 @@
                         <page string="Description" name="description">
                             <field name="description" placeholder="Describe what you need done..."/>
                         </page>
+                        <page string="Applications" name="applications">
+                            <field name="application_ids">
+                              <list editable="bottom">
+                                 <field name="applicant_id"/>
+                                 <field name="message"/>
+                                 <field name="status"/>
+                              </list>
+                             </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
