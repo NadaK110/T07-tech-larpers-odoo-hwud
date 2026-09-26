@@ -3,6 +3,7 @@ from odoo import models, fields
 class GigPosting(models.Model):
     _name = 'gig.posting'
     _description = 'Student Gig Posting'
+    application_ids = fields.One2many('gig.application', 'gig_id', string='Applications')
 
     name = fields.Char(string='Title', required=True)
     description = fields.Text(string='Description')
