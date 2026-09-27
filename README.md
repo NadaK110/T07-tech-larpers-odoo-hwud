@@ -7,18 +7,21 @@
 ## What we're building
 
 A platform where students post small gigs (tutoring, design work, errands, etc.) and
-other students apply to them. An AI feature auto-categorizes gig postings based on their
-description, and (stretch goal) helps match applicants to relevant gigs.
+other students apply to them. AI helps organize and improve the marketplace in three
+ways: auto-categorizing gigs, suggesting fair budgets, and scoring how well an applicant
+matches a gig.
 
 ## ⚡ Current Status (updated)
 
-| Task                                                         | Owner(s)               | Status                                   |
-| ------------------------------------------------------------ | ---------------------- | ---------------------------------------- | ----------------------- |
-| Task 1 — Backend: `gig.posting` model + module setup         | Nada                   | ✅ Done                                  |
-| Task 2 — Backend: `gig.application` model + Applications tab | Nada                   | ✅ Done                                  |
-| Task 3 — Frontend/Views (list, kanban, search, form polish)  | Zuha                   | 🔄 In progress (50%)                     |
-| Task 4 — AI categorization integration                       | Shayaan, Irina, Madiha | 🔲 Started                               | Irina & Shayaan working |
-| Presentation / demo prep                                     | **Irina + Nada**       | 🔲 Presentation DONE ✅ Nada: Demo Video |
+| Task | Owner(s) | Status |
+|---|---|---|
+| Backend: `gig.posting` model + module setup | Nada | ✅ Done |
+| Backend: `gig.application` model + Applications tab (incl. access control — applicants can't self-approve; only poster can accept/reject) | Nada | ✅ Done |
+| Frontend/Views (list, kanban, search, form polish) | Zuha | ✅ Done |
+| AI: category + budget suggestion | Irina | ✅ Done |
+| AI: applicant-to-gig match scoring | Shayaan | ✅ Done |
+| Presentation / demo prep | Irina | 🔄 In progress |
+| Sample/demo data + end-to-end testing | **OPEN — needs an owner** | 🔲 Not started |
 
 ## Getting started (for teammates joining now)
 
@@ -26,13 +29,11 @@ description, and (stretch goal) helps match applicants to relevant gigs.
    hackathon). This repo only holds our custom module code, not the Odoo core itself.
 
 2. Clone this repo:
-
    ```bash
    git clone https://github.com/NadaK110/T07-tech-larpers-odoo-hwud.git
    ```
 
 3. Pull the latest before you start working, every time:
-
    ```bash
    git pull --no-rebase
    ```
@@ -40,88 +41,60 @@ description, and (stretch goal) helps match applicants to relevant gigs.
 4. Our module lives in `gig_marketplace/` (alongside the `estate` and `estate_accounts`
    reference modules from the intro workshop — those are just examples, not our project).
 
-5. **Don't commit straight to `main` without pulling first** — a few of us hit a
-   divergent-branch issue already today. Always `git pull --no-rebase` before you start
-   editing, and again before you push.
+5. **Don't commit straight to `main` without pulling first.** Always
+   `git pull --no-rebase` before you start editing, and again before you push.
 
-## Setting up Ollama
-
-**MacOS + Linux Users**
-
-- Paste this into your terminal:
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-ollama serve
-```
-
-- Open a second terminal window and run:
-
-```bash
-ollama pull llama3.2:3b
-```
-
-**Windows Users**
-
-- Install Ollama using the Windows installer from the official Ollama website.
-
-- Open powershell and run:
-
-```powershell
-ollama pull llama3.2:3b
-```
+6. ⚠️ **Important — data does NOT sync via git, only code does.** Each of you runs Odoo
+   on your own laptop with your own local database. Gigs/applications you create only
+   exist on your own machine. For the actual demo, we need ONE laptop with all the code
+   pulled in and good sample data created on it — see "Sample/demo data" below.
 
 ## What's already working
 
-- You can create a "gig" (title, description, category, budget, deadline, status)
-- Gigs show up in a Kanban board grouped by status, plus a list view with filters
+- Create a gig (title, description, category, budget, deadline, status)
+- Gigs show in a Kanban board grouped by status, plus a list view with filters
 - Opening a gig shows a status bar (Open → In Progress → Completed) and a polished form
-- An **Applications tab** on each gig lets you add applicants, their message, and status
-  (Pending/Accepted/Rejected) — tested and working
+- **AI auto-fills the category** from the gig's description when it's created
+- **AI suggests a fair budget** based on the description
+- Applicants can apply via the Applications tab (applicant, message, status)
+- **AI scores how well an applicant matches a gig**, to help the poster spot good fits
+- Accept/Reject buttons on applications:
+  - An applicant **cannot** accept/reject their own application (blocked with an error)
+  - Only the gig's poster can accept/reject applications to their own gig
+  - Accepting an application automatically moves the gig to "In Progress"
 
-## What's NOT done yet — where to focus
+## What's left before submission
 
-**Task 4 (Shayaan, Irina, Madiha) — AI Categorization**
+**Sample/demo data + testing — OPEN ROLE**
+Whoever picks this up should, on whichever laptop will be used for the actual demo:
+- Pull the latest code from everyone (`git pull --no-rebase`, restart server, Apps →
+  Upgrade)
+- Create 8-10+ realistic gigs across different categories, so the AI category/budget
+  features have real variety to show off
+- Create several applications per gig (using a second test user, not just admin) so the
+  match-scoring and accept/reject flow can be demoed properly
+- Test the full journey end-to-end: post a gig → AI fills category/budget → apply as a
+  different user → check match score → accept as the poster → gig moves to In Progress
+- Flag any bugs found to whoever owns that part
 
-- Write a function that takes a gig's `description` text and returns a suggested
-  `category` COMPLETE
-- Hook it into `gig.posting` so the category auto-fills when a gig is created/saved
-- Test it against several different gig descriptions (tutoring, design, errands) to make
-  sure it's actually accurate
-- Shayaan and Irina working on 2 more features
-
-**Task 3 (Zuha) — remaining 50%**
-
-- Check in with Zuha on what's left — likely refinements to existing views, and possibly
-  the Applications tab UI could use polish (accept/reject buttons instead of manually
-  editing the status dropdown, for example)
-
-**Presentation / Demo Prep — OPEN ROLE**
-Whoever picks this up should:
-
-- Create realistic sample gigs and applications (8-10+) so the app looks like an active
-  marketplace, not just test data
-- Test the full user journey end-to-end (post a gig → apply → accept/reject) and flag any
-  bugs to whoever owns that part
-- Write a short demo script/walkthrough (aim for 2-3 minutes)
-- Set up shared slides (problem, solution, how it works, tech stack, impact) — pull a
-  couple of lines from each teammate about the part they built
-- Note: this doesn't have to be one person — presenting itself is a team effort, everyone
-  should be ready to speak to the part they built. This role is about coordinating and
-  making sure it all comes together.
+**Presentation (Irina, in progress)**
+- Demo script (aim for 2-3 minutes)
+- Slides: problem, solution, how it works, tech stack, impact
+- Note: presenting itself is a team effort — everyone should be ready to speak to the
+  part they built
 
 ## Data model (for reference)
 
 **`gig.posting`**
-
-- `name`, `description`, `poster_id` (→ res.partner), `category`, `budget`, `deadline`
+- `name`, `description`, `poster_id` (→ res.partner), `category` (AI), `budget` (AI),
+  `deadline`
 - `state`: Open / In Progress / Completed / Cancelled
 - `application_ids` (One2many → gig.application)
 
 **`gig.application`**
-
 - `gig_id` (→ gig.posting), `applicant_id` (→ res.partner), `message`
 - `status`: Pending / Accepted / Rejected
+- `match_score` (AI) — how well the applicant fits the gig
 
 ## Timeline reminders
 
@@ -131,4 +104,4 @@ Whoever picks this up should:
 ## Questions or blockers?
 
 Ping the group chat — don't spend more than ~20–30 minutes stuck alone on a setup issue,
-just ask
+just ask.
