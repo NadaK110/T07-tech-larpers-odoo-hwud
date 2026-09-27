@@ -12,13 +12,13 @@ description, and (stretch goal) helps match applicants to relevant gigs.
 
 ## ⚡ Current Status (updated)
 
-| Task | Owner(s) | Status |
-|---|---|---|
-| Task 1 — Backend: `gig.posting` model + module setup | Nada | ✅ Done |
-| Task 2 — Backend: `gig.application` model + Applications tab | Nada | ✅ Done |
-| Task 3 — Frontend/Views (list, kanban, search, form polish) | Zuha | 🔄 In progress (50%) |
-| Task 4 — AI categorization integration | Shayaan, Irina, Madiha | 🔲 Started | Irina & Shayaan working 
-| Presentation / demo prep | **Irina + Nada** | 🔲 Presentation DONE ✅ Nada: Demo Video 
+| Task                                                         | Owner(s)               | Status                                   |
+| ------------------------------------------------------------ | ---------------------- | ---------------------------------------- | ----------------------- |
+| Task 1 — Backend: `gig.posting` model + module setup         | Nada                   | ✅ Done                                  |
+| Task 2 — Backend: `gig.application` model + Applications tab | Nada                   | ✅ Done                                  |
+| Task 3 — Frontend/Views (list, kanban, search, form polish)  | Zuha                   | 🔄 In progress (50%)                     |
+| Task 4 — AI categorization integration                       | Shayaan, Irina, Madiha | 🔲 Started                               | Irina & Shayaan working |
+| Presentation / demo prep                                     | **Irina + Nada**       | 🔲 Presentation DONE ✅ Nada: Demo Video |
 
 ## Getting started (for teammates joining now)
 
@@ -26,11 +26,13 @@ description, and (stretch goal) helps match applicants to relevant gigs.
    hackathon). This repo only holds our custom module code, not the Odoo core itself.
 
 2. Clone this repo:
+
    ```bash
    git clone https://github.com/NadaK110/T07-tech-larpers-odoo-hwud.git
    ```
 
 3. Pull the latest before you start working, every time:
+
    ```bash
    git pull --no-rebase
    ```
@@ -41,6 +43,33 @@ description, and (stretch goal) helps match applicants to relevant gigs.
 5. **Don't commit straight to `main` without pulling first** — a few of us hit a
    divergent-branch issue already today. Always `git pull --no-rebase` before you start
    editing, and again before you push.
+
+## Setting up Ollama
+
+**MacOS + Linux Users**
+
+- Paste this into your terminal:
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+ollama serve
+```
+
+- Open a second terminal window and run:
+
+```bash
+ollama pull llama3.2:3b
+```
+
+**Windows Users**
+
+- Install Ollama using the Windows installer from the official Ollama website.
+
+- Open powershell and run:
+
+```powershell
+ollama pull llama3.2:3b
+```
 
 ## What's already working
 
@@ -53,6 +82,7 @@ description, and (stretch goal) helps match applicants to relevant gigs.
 ## What's NOT done yet — where to focus
 
 **Task 4 (Shayaan, Irina, Madiha) — AI Categorization**
+
 - Write a function that takes a gig's `description` text and returns a suggested
   `category` COMPLETE
 - Hook it into `gig.posting` so the category auto-fills when a gig is created/saved
@@ -60,14 +90,15 @@ description, and (stretch goal) helps match applicants to relevant gigs.
   sure it's actually accurate
 - Shayaan and Irina working on 2 more features
 
-
 **Task 3 (Zuha) — remaining 50%**
+
 - Check in with Zuha on what's left — likely refinements to existing views, and possibly
   the Applications tab UI could use polish (accept/reject buttons instead of manually
   editing the status dropdown, for example)
 
 **Presentation / Demo Prep — OPEN ROLE**
 Whoever picks this up should:
+
 - Create realistic sample gigs and applications (8-10+) so the app looks like an active
   marketplace, not just test data
 - Test the full user journey end-to-end (post a gig → apply → accept/reject) and flag any
@@ -82,11 +113,13 @@ Whoever picks this up should:
 ## Data model (for reference)
 
 **`gig.posting`**
+
 - `name`, `description`, `poster_id` (→ res.partner), `category`, `budget`, `deadline`
 - `state`: Open / In Progress / Completed / Cancelled
 - `application_ids` (One2many → gig.application)
 
 **`gig.application`**
+
 - `gig_id` (→ gig.posting), `applicant_id` (→ res.partner), `message`
 - `status`: Pending / Accepted / Rejected
 
