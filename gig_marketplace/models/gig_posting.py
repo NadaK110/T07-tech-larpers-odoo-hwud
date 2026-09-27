@@ -52,7 +52,7 @@ class GigPosting(models.Model):
         }
         for gig in self:
             if not gig.description:
-                gig.category = 'Other'
+                gig.category = 'other'
                 continue
             prompt = f"""
             You are categorising student gigs.
