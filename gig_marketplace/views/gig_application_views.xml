@@ -11,6 +11,8 @@
                             class="btn-primary" invisible="status != 'pending'"/>
                     <button name="action_reject" type="object" string="Reject"
                             invisible="status != 'pending'"/>
+                    <!-- NEW: re-run the AI match score -->
+                    <button name="action_ai_match_score" type="object" string="AI Match Score"/>
                     <field name="status" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -23,6 +25,11 @@
                     <group>
                         <group>
                             <field name="gig_id"/>
+                        </group>
+                        <!-- NEW: AI match result -->
+                        <group string="AI Match">
+                            <field name="match_score" widget="progressbar"/>
+                            <field name="match_reason"/>
                         </group>
                     </group>
                     <notebook>
@@ -44,6 +51,9 @@
             <list decoration-muted="status == 'rejected'">
                 <field name="applicant_id"/>
                 <field name="gig_id"/>
+                <!-- NEW: score bar + short AI reason -->
+                <field name="match_score" widget="progressbar"/>
+                <field name="match_reason" optional="show"/>
                 <field name="message" optional="show"/>
                 <field name="status" widget="badge"
                        decoration-warning="status == 'pending'"
@@ -65,6 +75,8 @@
                 <filter string="Pending" name="filter_pending" domain="[('status', '=', 'pending')]"/>
                 <filter string="Accepted" name="filter_accepted" domain="[('status', '=', 'accepted')]"/>
                 <filter string="Rejected" name="filter_rejected" domain="[('status', '=', 'rejected')]"/>
+                <!-- NEW: quick filter for strong matches -->
+                <filter string="Strong Match (70+)" name="filter_strong" domain="[('match_score', '>=', 70)]"/>
                 <separator/>
                 <filter string="Gig" name="group_gig" context="{'group_by': 'gig_id'}"/>
                 <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
