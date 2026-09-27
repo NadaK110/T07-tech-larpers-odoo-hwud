@@ -17,8 +17,8 @@ description, and (stretch goal) helps match applicants to relevant gigs.
 | Task 1 — Backend: `gig.posting` model + module setup | Nada | ✅ Done |
 | Task 2 — Backend: `gig.application` model + Applications tab | Nada | ✅ Done |
 | Task 3 — Frontend/Views (list, kanban, search, form polish) | Zuha | 🔄 In progress (50%) |
-| Task 4 — AI categorization integration | Shayaan, Irina, Madiha | 🔲  Started | Irina & Shayaan working 
-| Presentation / demo prep | **OPEN — needs an owner** | 🔲 Presentation by Irina DONE ✅ | Nada will do Demo Video editing 
+| Task 4 — AI categorization integration | Shayaan, Irina, Madiha | 🔲 Started | Irina & Shayaan working 
+| Presentation / demo prep | **Irina + Nada** | 🔲 Presentation DONE ✅ Nada: Demo Video 
 
 ## Getting started (for teammates joining now)
 
