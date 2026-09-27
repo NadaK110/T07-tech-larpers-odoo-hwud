@@ -74,7 +74,11 @@
         <field name="arch" type="xml">
             <list decoration-muted="state == 'cancelled'">
                 <field name="name"/>
-                <field name="category"/>
+                <field name="category" widget="badge"
+                       decoration-info="category in ('tutoring', 'research', 'writing', 'translation')"
+                       decoration-success="category == 'programming'"
+                       decoration-warning="category in ('graphic_design', 'design', 'photography', 'video_editing', 'music')"
+                       decoration-danger="category in ('marketing', 'event_support')"/>
                 <field name="poster_id" optional="show"/>
                 <field name="deadline"/>
                 <field name="budget" sum="Total Budget"/>
@@ -118,11 +122,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
-                <field name="category" widget="badge"
-                       decoration-info="category in ('tutoring', 'research', 'writing', 'translation')"
-                       decoration-success="category == 'programming'"
-                       decoration-warning="category in ('graphic_design', 'design', 'photography', 'video_editing', 'music')"
-                       decoration-danger="category in ('marketing', 'event_support')"/>
+                <field name="category"/>
                 <field name="poster_id"/>
                 <filter string="Open" name="filter_open" domain="[('state', '=', 'open')]"/>
                 <filter string="In Progress" name="filter_in_progress" domain="[('state', '=', 'in_progress')]"/>
