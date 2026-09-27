@@ -21,28 +21,24 @@
                         <group string="Gig Details">
                             <label for="category"/>
                             <div class="o_row">
-                                <field name="category" placeholder="Filled out by AI"/>
-                                <button
-                                    name="action_suggest_category"
-                                    type="object"
-                                    string="Suggest Category"
-                                    class="btn-primary"
-                                />
+                                <field name="category" placeholder="Let AI suggest one"/>
+                                <button name="action_suggest_category" type="object"
+                                        string="AI Suggest" icon="fa-magic"
+                                        class="btn-primary btn-sm"/>
                             </div>
                             <field name="poster_id"/>
                         </group>
                         <group string="Budget &amp; Timing">
+                            <!-- the budget row was missing its label, that's what
+                                 made it look shifted compared to the category row -->
+                            <label for="budget"/>
                             <div class="o_row">
                                 <field name="budget"/>
-                                <button
-                                    name="action_suggest_budget"
-                                    type="object"
-                                    string="Suggest Budget"
-                                    class="btn-primary"
-                                />
+                                <button name="action_suggest_budget" type="object"
+                                        string="AI Suggest" icon="fa-magic"
+                                        class="btn-primary btn-sm"/>
                             </div>
                             <field name="deadline"/>
-
                         </group>
                     </group>
                     <notebook>
@@ -100,7 +96,11 @@
                 <templates>
                     <t t-name="card">
                         <field name="name" class="fw-bold fs-5"/>
-                        <field name="category" class="text-muted"/>
+                        <field name="category" widget="badge"
+                               decoration-info="category in ('tutoring', 'research', 'writing', 'translation')"
+                               decoration-success="category == 'programming'"
+                               decoration-warning="category in ('graphic_design', 'design', 'photography', 'video_editing', 'music')"
+                               decoration-danger="category in ('marketing', 'event_support')"/>
                         <div class="d-flex justify-content-between mt-2">
                             <span>Budget: <field name="budget"/></span>
                             <field name="deadline"/>
@@ -118,7 +118,11 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
-                <field name="category"/>
+                <field name="category" widget="badge"
+                       decoration-info="category in ('tutoring', 'research', 'writing', 'translation')"
+                       decoration-success="category == 'programming'"
+                       decoration-warning="category in ('graphic_design', 'design', 'photography', 'video_editing', 'music')"
+                       decoration-danger="category in ('marketing', 'event_support')"/>
                 <field name="poster_id"/>
                 <filter string="Open" name="filter_open" domain="[('state', '=', 'open')]"/>
                 <filter string="In Progress" name="filter_in_progress" domain="[('state', '=', 'in_progress')]"/>
@@ -130,11 +134,22 @@
         </field>
     </record>
 
+    <!-- ============ GRAPH VIEW (gigs by category chart) ============ -->
+    <record id="view_gig_posting_graph" model="ir.ui.view">
+        <field name="name">gig.posting.graph</field>
+        <field name="model">gig.posting</field>
+        <field name="arch" type="xml">
+            <graph string="Gigs by Category" type="bar">
+                <field name="category"/>
+            </graph>
+        </field>
+    </record>
+
     <!-- ============ ACTION (what opens when you click the menu) ============ -->
     <record id="action_gig_posting" model="ir.actions.act_window">
         <field name="name">Gigs</field>
         <field name="res_model">gig.posting</field>
-        <field name="view_mode">kanban,list,form</field>
+        <field name="view_mode">kanban,list,graph,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Post your first gig!</p>
             <p>Need tutoring, design work or an errand done? Post it here and other students can apply.</p>
