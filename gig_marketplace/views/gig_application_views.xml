@@ -94,7 +94,14 @@
             <p>When students apply to a gig, their applications show up here.</p>
         </field>
     </record>
-
+   <record id="action_server_rescore_applications" model="ir.actions.server">
+       <field name="name">AI Re-score Selected</field>
+       <field name="model_id" ref="model_gig_application"/>
+       <field name="binding_model_id" ref="model_gig_application"/>
+       <field name="binding_view_types">list</field>
+       <field name="state">code</field>
+       <field name="code">records.action_ai_match_score()</field>
+   </record>
     <!-- Applications menu, sits next to Gigs in the top bar -->
     <menuitem id="menu_gig_application" name="Applications"
               parent="menu_gig_marketplace_root" action="action_gig_application" sequence="20"/>
