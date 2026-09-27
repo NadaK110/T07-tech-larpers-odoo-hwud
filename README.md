@@ -17,8 +17,8 @@ description, and (stretch goal) helps match applicants to relevant gigs.
 | Task 1 — Backend: `gig.posting` model + module setup | Nada | ✅ Done |
 | Task 2 — Backend: `gig.application` model + Applications tab | Nada | ✅ Done |
 | Task 3 — Frontend/Views (list, kanban, search, form polish) | Zuha | 🔄 In progress (50%) |
-| Task 4 — AI categorization integration | Shayaan, Irina, Madiha | 🔲 Not started |
-| Presentation / demo prep | **OPEN — needs an owner** | 🔲 Not started |
+| Task 4 — AI categorization integration | Shayaan, Irina, Madiha | 🔲  Started | Irina & Shayaan working 
+| Presentation / demo prep | **OPEN — needs an owner** | 🔲 Presentation by Irina DONE ✅ | Nada will do Demo Video editing 
 
 ## Getting started (for teammates joining now)
 
@@ -53,14 +53,13 @@ description, and (stretch goal) helps match applicants to relevant gigs.
 ## What's NOT done yet — where to focus
 
 **Task 4 (Shayaan, Irina, Madiha) — AI Categorization**
-- Get an LLM API key (OpenAI or Anthropic)
 - Write a function that takes a gig's `description` text and returns a suggested
-  `category`
+  `category` COMPLETE
 - Hook it into `gig.posting` so the category auto-fills when a gig is created/saved
 - Test it against several different gig descriptions (tutoring, design, errands) to make
   sure it's actually accurate
-- Stretch goal if time allows: score how well an applicant's message matches a gig's
-  description
+- Shayaan and Irina working on 2 more features
+
 
 **Task 3 (Zuha) — remaining 50%**
 - Check in with Zuha on what's left — likely refinements to existing views, and possibly
