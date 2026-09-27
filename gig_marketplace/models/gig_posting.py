@@ -97,3 +97,40 @@ class GigPosting(models.Model):
             else:
                 gig.category = 'other'
         return True
+
+    def action_suggest_budget(self):
+
+        for gig in self:
+            if not gig.description:
+                gig.budget = 0.0
+                continue
+            prompt = f"""
+                You are a student gig marketplace assistant.
+                Suggest from a student's perspective with a reasonable budget.
+                Based ONLY on the gig description and the gig title below, suggest a reasonable budget for the gig in AED.
+                
+                Gig title: {gig.name}
+                Gig description: {gig.description}
+                
+                Return ONLY the numeric amount.
+                Do not include AED, DHS, currency symbols, words, or explanations.
+                For example: 150
+                """
+
+            response = requests.post('http://localhost:11434/api/generate',
+                                     json={
+                                         'model': 'llama3.2:3b',
+                                         'prompt': prompt,
+                                         'stream': False
+                                     },
+                                     timeout=120)
+            response.raise_for_status()
+            result = response.json()
+            suggested_budget = result.get('response', '').strip()
+
+            try:
+                gig.budget = float(suggested_budget)
+            except ValueError:
+                gig.budget = 0.0
+
+        return True

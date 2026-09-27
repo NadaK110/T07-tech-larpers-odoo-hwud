@@ -32,8 +32,17 @@
                             <field name="poster_id"/>
                         </group>
                         <group string="Budget &amp; Timing">
-                            <field name="budget"/>
+                            <div class="o_row">
+                                <field name="budget"/>
+                                <button
+                                    name="action_suggest_budget"
+                                    type="object"
+                                    string="Suggest Budget"
+                                    class="btn-primary"
+                                />
+                            </div>
                             <field name="deadline"/>
+
                         </group>
                     </group>
                     <notebook>
