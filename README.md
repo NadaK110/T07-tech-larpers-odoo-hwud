@@ -20,8 +20,8 @@ matches a gig.
 | Frontend/Views (list, kanban, search, form polish) | Zuha | ✅ Done |
 | AI: category + budget suggestion | Irina | ✅ Done |
 | AI: applicant-to-gig match scoring | Shayaan | ✅ Done |
-| Presentation / demo prep | Irina | 🔄 In progress |
-| Sample/demo data + end-to-end testing | **OPEN — needs an owner** | 🔲 Not started |
+| Presentation / demo prep | Irina | ✅ Done |
+| Sample/demo data + end-to-end testing | **OPEN — needs an owner** | ✅ Done |
 
 ## Getting started (for teammates joining now)
 
